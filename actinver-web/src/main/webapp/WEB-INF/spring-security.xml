@@ -1,0 +1,75 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<global-method-security  secured-annotations="enabled">
+	</global-method-security>
+	<!-- Manejo de las peticiones HTTP -->
+	<http use-expressions="true" auto-config="false" disable-url-rewriting="true" entry-point-ref="authenticationEntryPoint" >
+		<anonymous enabled="true"/>
+		<access-denied-handler ref="accessDeniedHandler"/>
+		<intercept-url pattern="/favicon.svg" access="isAnonymous()" />
+		<intercept-url pattern="/index.jsp*" access="isAnonymous()"  />
+		<intercept-url pattern="/j_spring_security_logout*" access="isAnonymous()" />
+		<intercept-url pattern="/loginSecurity" access="isAnonymous()" />
+		<intercept-url pattern="/authenticator/**" access="isAnonymous()" />
+		<intercept-url pattern="/resources/**" access="isAnonymous()"  />
+		<intercept-url pattern="/autentificacion/**" access="isAnonymous()"  />
+		<intercept-url pattern="/error/**" access="isAnonymous()"  />
+		<intercept-url pattern="/inicio/**" access="isAnonymous()" />
+		<intercept-url pattern="/login/**" access="isAnonymous() OR isAuthenticated()" />
+		<intercept-url pattern="/logout/**" access="isAnonymous() OR isAuthenticated()" />
+		<intercept-url pattern="/menu/**" access="hasAnyRole('ROLE_ADMIN','ROLE_L','ROLE_P')" />
+		<intercept-url pattern="/usuarios/**" access="hasAnyRole('ROLE_ADMIN')" />
+		
+		<session-management>
+<!-- 			Si la contrasenia es incorrecta -->
+		    <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="http://www.cloudinnovations.com.mx/actinver/login/relogin.htm?tipo='tiempo'" />
+		</session-management>
+
+		<custom-filter position="FORM_LOGIN_FILTER" ref="authenticationFilter" />
+	</http>
+	<beans:bean id="authenticationFilter" class="com.front.security.login.CustomAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="customAuthenticationManager" />
+		<beans:property name="filterProcessesUrl" value="/loginSecurity" />
+		<beans:property name="authenticationFailureHandler" ref="failureHandler" />
+        <beans:property name="authenticationSuccessHandler" ref="successHandler" />
+		<beans:property name="postOnly" value="true" />
+	</beans:bean>
+	
+	<beans:bean id="successHandler" class="com.front.security.login.LoginHelper"/>
+	
+	<!-- beans:bean id="successHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <beans:property name="defaultTargetUrl" value="/private/login/login.htm" />
+    </beans:bean -->
+
+    <beans:bean id="failureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+        <beans:property name="defaultFailureUrl" value="/login/relogin.htm?tipo='datosIncorrectos'" />
+	</beans:bean>
+
+	<beans:bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<beans:property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+		<beans:property name="accessDeniedHandler" ref="accessDeniedHandler" />
+	</beans:bean>
+
+	<beans:bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/login/relogin.htm?tipo='tiempo'" />
+	</beans:bean>
+
+	<!-- Acceso denegado por Rol no valido -->
+	<beans:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+		<beans:property name="errorPage" value="/error/errorLogin.htm" />
+	</beans:bean>
+
+	<authentication-manager alias="customAuthenticationManager"  >
+		<authentication-provider   ref="customAuthenticationProvider"  />
+	</authentication-manager>
+
+	<beans:bean  id="customAuthenticationProvider" class="com.front.security.login.Autentificacion" >
+	</beans:bean>
+
+</beans:beans>

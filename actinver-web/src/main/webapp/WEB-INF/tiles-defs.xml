@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+	
+<tiles-definitions>
+		  <!-- Base Definition -->
+	   <definition name="base-definition" 
+	       template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">  
+	       <put-attribute name="title" value="" />  
+	       <put-attribute name="header" value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />  
+	       <put-attribute name="body" value="" />  
+	       <put-attribute name="footer" value="/WEB-INF/views/tiles/template/defaultFooter.jsp" />  
+	   </definition>  
+			
+		<definition name="inicio" extends="base-definition" >
+			 <put-attribute name="title" value="Inicio" />  
+       		 <put-attribute name="body" value="/WEB-INF/views/pages/public/inicio.jsp" />  
+		</definition>
+		
+		<definition name="login" extends="base-definition" >
+			<put-attribute name="body" value="/WEB-INF/views/pages/public/login.jsp" />  
+       		<put-attribute name="title" value="Login" />  
+		</definition>
+		
+		<definition name="sessionInvalid" extends="base-definition" >
+			<put-attribute name="body" value="/WEB-INF/views/pages/public/sessionInvalida.jsp" />  
+       		<put-attribute name="title" value="Login" />  
+		</definition>
+		
+		<definition name="errorLogin" extends="base-definition" >
+			<put-attribute name="body" value="/WEB-INF/views/pages/public/loginError.jsp" />  
+       		<put-attribute name="title" value="Login" />  
+		</definition>
+		
+		<definition name="menu" extends="base-definition" >
+			 <put-attribute name="title" value="Inicio" />  
+       		 <put-attribute name="body" value="/WEB-INF/views/pages/private/menu.jsp" />  
+		</definition>
+		
+		<!-- list Page -->
+	   <definition name="usuarios" extends="base-definition">
+	   	   <put-attribute name="body" value="/WEB-INF/views/pages/private/usuarios.jsp" />  
+	       <put-attribute name="title" value="Login" />  
+	   </definition>  
+	   <definition name="nuevoUsuario" extends="base-definition">
+	   	   <put-attribute name="body" value="/WEB-INF/views/pages/private/nuevoUsuario.jsp" />  
+	       <put-attribute name="title" value="Login" />  
+	   </definition> 
+	   <definition name="detalleUsuario" extends="base-definition">
+	   	   <put-attribute name="body" value="/WEB-INF/views/pages/private/detalleUsuario.jsp" />  
+	       <put-attribute name="title" value="Login" />  
+	   </definition> 
+	    <definition name="editaUsuario" extends="base-definition">
+	   	   <put-attribute name="body" value="/WEB-INF/views/pages/private/editaUsuario.jsp" />  
+	       <put-attribute name="title" value="Login" />  
+	   </definition>  
+		
+		<definition name="otraSession" extends="base-definition" >
+			
+		</definition>
+		
+	</tiles-definitions>
