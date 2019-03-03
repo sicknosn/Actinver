@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+	<!-- Database conection setting -->
+	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+<!-- 	<property name="connection.url">jdbc:mysql://localhost:3306/cloudinn_system_sixteen?useSSL=false</property> -->
+	<property name="connection.url">jdbc:mysql://localhost:3306/cloudinn_practicas</property>
+	<property name="connection.username">cloudinn_systemsixteen</property>
+	<property name="connection.password">Leasim17</property>
+	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+	<property name="connection.pool_size">5</property>
+	<property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+	<!-- Here comes the mapping definition - saved in resources dir with this -->
+	<mapping class="com.persistence.entities.TblUsuario"/>
+	
+	</session-factory>
+</hibernate-configuration>
